@@ -73,17 +73,41 @@ export class HomePage {
     // });
   }
 
-  // public createPerson(name : string) {
-  //       return new Promise((resolve, reject) => {
-  //           //console.log('Inserting');
-  //           this.db.executeSql("INSERT INTO danceMoves (name) VALUES (?)", [name]).then((data) => {
-  //               //console.log('Inserted');
-  //               resolve(data);
-  //           }, (error) => {
-  //               //console.log('Failed to insert.');
-  //               reject(error);
-  //           });
-  //       });
-  //   }
+  public createPerson(name : string) {
+    console.log('Creating Persion: ' + name);
+        this.db = new SQLite();
+        console.log('opening database');
+        this.db.openDatabase({
+          name: 'data.db',
+          location: 'default' // the location field is required
+        })
+        .then(() => {
+          var querry = "INSERT INTO danceMoves (name) VALUES (\'" + name + "\')";
+          console.log(querry);
+          this.db.executeSql('create table IF NOT EXISTS danceMoves(name VARCHAR(32))', {})
+          .then(()=>{
+            this.db.executeSql(querry,{})
+            console.log('Added name into table');
+            this.db.executeSql("SELECT * FROM danceMoves", {})
+            .then((data)=>{
+              console.log('Nb or rows ' + data.rows.length);
+              for (let i = 0; i < data.rows.length; i++){
+                console.log(data.rows.item(i).name);
+              }
+            });
+          });
+        });
+
+        // return new Promise((resolve, reject) => {
+        //     //console.log('Inserting');
+        //     this.db.executeSql("INSERT INTO danceMoves (name) VALUES (?)", [name]).then((data) => {
+        //         //console.log('Inserted');
+        //         resolve(data);
+        //     }, (error) => {
+        //         //console.log('Failed to insert.');
+        //         reject(error);
+        //     });
+        // });
+    }
 
 }
