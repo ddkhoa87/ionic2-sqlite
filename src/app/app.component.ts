@@ -20,27 +20,27 @@ export class MyApp {
       StatusBar.styleDefault();
       Splashscreen.hide();
 
-        this.db = new SQLite();
-        this.db.openDatabase({
-          name: 'data.db',
-          location: 'default' // the location field is required
-        }).then(() => {
-          this.db.executeSql('create table IF NOT EXISTS danceMoves(name VARCHAR(32))', {}).then(() => {
-          this.db.executeSql("INSERT INTO danceMoves (name) VALUES ('Dan')",{});
-          this.db.executeSql("SELECT * FROM danceMoves", {}).then((data) => {
-            console.log('Nb or rows ' + data.rows.length);
-            for (let i = 0; i < data.rows.length; i++){
-              console.log(data.rows.item(i).name);
-            }
-          });
-            console.log('Table created.');
-          }, (err) => {
-            console.error('Unable to execute sql: ', err);
-          });
-        }, (err) => {
-          console.error('Unable to open database: ', err);
-        });
-
+        // this.db = new SQLite();
+        // this.db.openDatabase({
+        //   name: 'data.db',
+        //   location: 'default' // the location field is required
+        // }).then(() => {
+        //   this.db.executeSql('create table IF NOT EXISTS danceMoves(name VARCHAR(32))', {}).then(() => {
+        //   this.db.executeSql("INSERT INTO danceMoves (name) VALUES ('Dan')",{});
+        //   this.db.executeSql("SELECT * FROM danceMoves", {}).then((data) => {
+        //     console.log('Nb or rows ' + data.rows.length);
+        //     for (let i = 0; i < data.rows.length; i++){
+        //       console.log(data.rows.item(i).name);
+        //     }
+        //   });
+        //     console.log('Table created.');
+        //   }, (err) => {
+        //     console.error('Unable to execute sql: ', err);
+        //   });
+        // }, (err) => {
+        //   console.error('Unable to open database: ', err);
+        // });
+        //
         // this.db.executeSql("INSERT INTO danceMoves (name) VALUES ('Dan')",{}).the(() => {
         //   console.log ('Name inserted');
         // }, (err) => {

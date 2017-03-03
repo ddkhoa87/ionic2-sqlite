@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-
-import { NavController} from 'ionic-angular';
 import { Platform } from 'ionic-angular';
+import { NavController} from 'ionic-angular';
+
 import { SQLite } from 'ionic-native';
 
 @Component({
@@ -12,9 +12,36 @@ export class HomePage {
 
   //private storage: Storage;
   public personList: Array<Object>;
-  //public db : SQLite;
+  public db : SQLite;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, platform: Platform) {
+
+    platform.ready().then(() => {
+      this.db = new SQLite();
+      console.log('opening database');
+      this.db.openDatabase({
+        name: 'data.db',
+        location: 'default' // the location field is required
+      }).then(() => {
+        // this.db.executeSql('create table IF NOT EXISTS danceMoves(name VARCHAR(32))', {}).then(()=>{
+        //   this.db.executeSql("INSERT INTO danceMoves (name) VALUES ('Khoa')",{});
+        //   this.db.executeSql("SELECT * FROM danceMoves", {}).then((data)=>{
+        //     console.log('Nb or rows ' + data.rows.length);
+        //     for (let i = 0; i < data.rows.length; i++){
+        //       console.log(data.rows.item(i).name);
+        //     }
+        //
+        //   });
+        // });
+      });
+      //this.db.executeSql("INSERT INTO danceMoves (name) VALUES ('Dang')",{});
+      // this.db.executeSql("SELECT * FROM danceMoves", {}).then((data)=>{
+      //   console.log('Nb or rows ' + data.rows.length);
+      //   for (let i = 0; i < data.rows.length; i++){
+      //     console.log(data.rows.item(i).name);
+      //   }
+      // });
+    });
 
     // console.log('opening database');
     // SQLite.openDatabase({
